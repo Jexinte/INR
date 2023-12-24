@@ -1,0 +1,33 @@
+{% extends 'layout.twig' %}
+
+{% block icon_img %}
+    <link rel="icon" type="image/png" href="/favicon.ico"/>
+{% endblock %}
+
+{% block title %} Homepage | {{ parent () }} {% endblock %}
+
+{% block css_page %}
+    <link rel="stylesheet" href="/assets/css/registration.css">
+{% endblock %}
+
+{% block content %}
+    <header>
+        <nav>
+            <a href="#">Connexion</a>
+        </nav>
+    </header>
+    <div class="container-fluid" id="registration">
+        <div class="banner">
+            <a href="#"><img src="/assets/img/logo.jpg" alt="logo"></a>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {{ form_start(form,{'action':path('registration_post')}) }}
+                {{ form_row(form.username) }}
+                {{ form_errors(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

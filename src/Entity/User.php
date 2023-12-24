@@ -6,8 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity([
+    'fields' => 'username',
+    'message' => 'Ce nom d\'utilisateur n\'est pas disponible'
+])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -16,15 +21,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message:'Ce champ ne peut être vide !')]
+    #[Assert\Regex(
+        pattern: '/^[A-Z][a-zA-Z0-9]{0,9}$/',
+        message: 'Le nom utilisateur doit commencer par une lettre majuscule',
+        match: true
+    )]
+
     private ?string $username = null;
 
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
+
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Ce champ ne peut être vide !')]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[A-Z])(?=.*[a-z])[A-Za-z]{8,}$/',
+        message: 'Le mot doit commencer par une lettre majuscule suivi de lettre minuscules et avoir au minimum 8 caractères',
+        match: true
+    )]
     private ?string $password = null;
 
     public function getId(): ?int
