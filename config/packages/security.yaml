@@ -5,7 +5,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        app_users:
             entity:
                 class: App\Entity\User
                 property: username
@@ -15,7 +15,10 @@ security:
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: app_users
+            form_login :
+                login_path : login
+                check_path : login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
