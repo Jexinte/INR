@@ -19,6 +19,9 @@ security:
             form_login :
                 login_path : login
                 check_path : login
+                default_target_path : homepage
+                username_parameter: login[username]
+                password_parameter: login[password]
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
