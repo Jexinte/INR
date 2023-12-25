@@ -4,7 +4,7 @@
     <link rel="icon" type="image/png" href="/favicon.ico"/>
 {% endblock %}
 
-{% block title %} Homepage | {{ parent () }} {% endblock %}
+{% block title %} <title> Homepage | {{ parent () }} </title> {% endblock %}
 
 {% block css_page %}
     <link rel="stylesheet" href="/assets/css/homepage.css">
@@ -13,8 +13,12 @@
 {% block content %}
     <header>
         <nav>
-            <a href="#"><img src="/assets/img/logo.jpg" alt="logo" height="60"></a>
-                <a href="/logout" id="logout">Déconnexion</a>
+            <a href="/"><img src="/assets/img/logo.jpg" alt="logo" height="60"></a>
+            <div class="right">
+                <a href="{{ path('bloodSamplingGet') }}" id="bloodSampling"><i class="fa-solid fa-plus"></i></a>
+                <a href="/logout" id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+
         </nav>
     </header>
     <div class="container-fluid" id="homepage">
@@ -36,21 +40,21 @@
                         <th>Date du prochain INR</th>
                     </tr>
                     </thead>
-                {% for result in results %}
+                    {% for bloodSamplingResult in bloodSamplingResults %}
 
                         <tbody>
                         <tr>
-                            <td class="table-dark">{{ result.frenchDate}}</td>
-                            <td>{{ result.dailyDoseBeforeBloodTest}}</td>
-                            <td>{{ result.inr}}</td>
-                            <td>{{ result.dailyDoseModifiedAfterInr}}</td>
-                            <td>{{ result.anyComments}}</td>
-                            <td>{{ result.nextDateInr}}</td>
+                            <td class="table-dark">{{ bloodSamplingResult.frenchDate }}</td>
+                            <td>{{ bloodSamplingResult.dailyDoseBeforeBloodTest }}</td>
+                            <td>{{ bloodSamplingResult.inr }}</td>
+                            <td>{{ bloodSamplingResult.dailyDoseModifiedAfterInr }}</td>
+                            <td>{{ bloodSamplingResult.anyComments }}</td>
+                            <td>{{ bloodSamplingResult.nextDateInr }}</td>
                         </tr>
 
                         </tbody>
 
-                {% endfor %}
+                    {% endfor %}
                 </table>
 
             </div>

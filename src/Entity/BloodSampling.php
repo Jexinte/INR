@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BloodSamplingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[\AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: BloodSamplingRepository::class)]
 class BloodSampling
@@ -15,21 +17,27 @@ class BloodSampling
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message:'Veuillez sélectionner une date de prélèvement !')]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Veuillez spécifier la dose journalière avant que la prise de sang n\'est été effectuée !')]
     private ?float $dailyDoseBeforeBloodTest = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Veuillez spécifier l\'inr !')]
     private ?float $inr = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Veuillez spécifier la dose journalière modifiée après INR !')]
     private ?string $dailyDoseModifiedAfterInr = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Veuillez spécifier les remarques éventuelles !')]
     private ?string $anyComments = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message:'Veuillez spécifier la date du prochain INR !')]
     private ?\DateTimeInterface $dateOfNextInr = null;
 
     #[ORM\Column]
@@ -45,7 +53,7 @@ class BloodSampling
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -81,7 +89,7 @@ class BloodSampling
         return $this->dailyDoseModifiedAfterInr;
     }
 
-    public function setDailyDoseModifiedAfterInr(float $dailyDoseModifiedAfterInr): static
+    public function setDailyDoseModifiedAfterInr(?string $dailyDoseModifiedAfterInr): static
     {
         $this->dailyDoseModifiedAfterInr = $dailyDoseModifiedAfterInr;
 
@@ -105,7 +113,7 @@ class BloodSampling
         return $this->dateOfNextInr;
     }
 
-    public function setDateOfNextInr(\DateTimeInterface $dateOfNextInr): static
+    public function setDateOfNextInr(?\DateTimeInterface $dateOfNextInr): static
     {
         $this->dateOfNextInr = $dateOfNextInr;
 

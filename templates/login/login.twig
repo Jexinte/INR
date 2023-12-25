@@ -4,7 +4,7 @@
     <link rel="icon" type="image/png" href="/favicon.ico"/>
 {% endblock %}
 
-{% block title %} Login | {{ parent () }} {% endblock %}
+{% block title %} <title> Login | {{ parent () }} </title>{% endblock %}
 
 {% block css_page %}
     <link rel="stylesheet" href="/assets/css/login.css">
@@ -13,12 +13,12 @@
 {% block content %}
     <header>
         <nav>
-            <a href="#">Inscription</a>
+            <a href="{{ path('registration_get') }}">Inscription</a>
         </nav>
     </header>
     <div class="container-fluid" id="login">
         <div class="banner">
-            <a href="#"><img src="/assets/img/logo.jpg" alt="logo"></a>
+            <a href="{{ path ('homepage') }}"><img src="/assets/img/logo.jpg" alt="logo"></a>
         </div>
 
         <div class="row">

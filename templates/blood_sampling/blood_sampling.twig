@@ -4,27 +4,27 @@
     <link rel="icon" type="image/png" href="/favicon.ico"/>
 {% endblock %}
 
-{% block title %} <title> Homepage | {{ parent () }} </title> {% endblock %}
+{% block title %} <title>Ajouter un INR| {{ parent () }} </title> {% endblock %}
 
 {% block css_page %}
-    <link rel="stylesheet" href="/assets/css/registration.css">
+    <link rel="stylesheet" href="/assets/css/bloodSampling.css">
 {% endblock %}
 
 {% block content %}
     <header>
         <nav>
-            <a href="{{ path('login') }}">Connexion</a>
+            <a href="{{ path('homepage') }}"><i class="fa-solid fa-arrow-left"></i></a>
         </nav>
     </header>
-    <div class="container-fluid" id="registration">
+    <div class="container-fluid" id="bloodSampling">
         <div class="banner">
-            <a href="#"><img src="/assets/img/logo.jpg" alt="logo"></a>
+            <img src="/assets/img/addInrBanner.jpg" alt="banner">
         </div>
 
         <div class="row">
+            <h1>Ajouter un INR</h1>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                {{ form_start(form,{'action':path('registration_post')}) }}
-                {{ form_row(form.username) }}
+                {{ form_start(form,{'action':path('bloodSamplingPost')}) }}
                 {{ form_errors(form) }}
                 {{ form_end(form) }}
             </div>
