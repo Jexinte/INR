@@ -2,18 +2,23 @@
 
 namespace App\Controller;
 
+use App\Repository\BloodSamplingRepository;
+use IntlDateFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 class HomepageController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function index(): JsonResponse
+    public function homepage(BloodSamplingRepository $bloodSamplingRepository, IntlDateFormatter $dateFormatter): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/HomepageController.php',
-        ]);
+        foreach($bloodSamplingRepository->findAll() as  $k => $bloodSampling)
+        {
+            $bloodSamplingRepository->findAll()[$k]->frenchDate = ucfirst($dateFormatter->format($bloodSampling->getCreatedAt()));
+            $bloodSamplingRepository->findAll()[$k]->nextDateInr = ucfirst($dateFormatter->format($bloodSampling->getDateOfNextInr()));
+        }
+       return new Response($this->render('homepage/homepage.twig',[
+           'results' => $bloodSamplingRepository->findAll(),
+       ]));
     }
 }

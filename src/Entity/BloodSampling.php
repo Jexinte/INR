@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\BloodSamplingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+#[\AllowDynamicProperties]
 #[ORM\Entity(repositoryClass: BloodSamplingRepository::class)]
 class BloodSampling
 {
@@ -24,7 +24,7 @@ class BloodSampling
     private ?float $inr = null;
 
     #[ORM\Column]
-    private ?float $dailyDoseModifiedAfterInr = null;
+    private ?string $dailyDoseModifiedAfterInr = null;
 
     #[ORM\Column(length: 255)]
     private ?string $anyComments = null;
@@ -76,7 +76,7 @@ class BloodSampling
         return $this;
     }
 
-    public function getDailyDoseModifiedAfterInr(): ?float
+    public function getDailyDoseModifiedAfterInr(): ?string
     {
         return $this->dailyDoseModifiedAfterInr;
     }
