@@ -22,3 +22,7 @@ header a:visited{
 text{
     display: none;
 }
+
+footer {
+    margin-top: 3em;
+}

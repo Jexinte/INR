@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\BloodSampling;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +22,9 @@ class BloodSamplingRepository extends ServiceEntityRepository
         parent::__construct($registry, BloodSampling::class);
     }
 
-//    /**
-//     * @return BloodSampling[] Returns an array of BloodSampling objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?BloodSampling
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getEm(): EntityManagerInterface
+    {
+        return $this->_em;
+    }
 }
