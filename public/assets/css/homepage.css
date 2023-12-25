@@ -1,0 +1,57 @@
+header{
+    margin-bottom: 3em;
+}
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1em;
+}
+
+#logout{
+    position: relative;
+    top: 16px;
+}
+.banner img{
+    width: 100%;
+}
+
+.banner {
+    margin-bottom: 5em;
+}
+
+#homepage h1{
+    margin-bottom: 1em;
+    text-align: center;
+    position: relative;
+    font-size: 3em;
+}
+
+#homepage h1::after
+{
+    content: '';
+    display: block;
+    width: 4.5em;
+    border-bottom: 1px solid red;
+    border-width: .1em;
+    margin: 0 auto;
+    position: relative;
+}
+#homepage{
+    padding: 0;
+}
+#homepage .table{
+    text-align: center;
+    width: 80%;
+    margin:2em auto;
+}
+
+#homepage .row {
+    margin-inline: 0;
+}
+.table thead th{
+    padding:2em ;
+}
+
+.table tbody td {
+    padding:2em;
+}
