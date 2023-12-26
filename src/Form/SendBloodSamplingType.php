@@ -21,7 +21,6 @@ class SendBloodSamplingType extends AbstractType
                     'Dr Beyler' => 'constance.beyler@aphp.fr',
                     'Dr Egraz' => 'mathilde.egraz@aphp.fr',
                     'Dr Bonnefoy' => 'ronan.bonnefoy@aphp.fr',
-                    'Dr Test' => 'mdembelepro@gmail.com'
                 ],
                 'constraints' => [
                     new NotBlank(message:'Merci de séléctionner un destinaire !')

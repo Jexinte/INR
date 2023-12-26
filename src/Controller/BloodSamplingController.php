@@ -9,14 +9,12 @@ use App\Service\AdaptiMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BloodSamplingController extends AbstractController
 {
-    #[Route('/blood-sampling', name: 'bloodSamplingGet',methods: ['GET'])]
+    #[Route('/blood-sampling', name: 'bloodSamplingGet', methods: ['GET'])]
     public function bloodSamplingPage(): Response
     {
         $form = $this->createForm(BloodSamplingType::class);
@@ -24,13 +22,13 @@ class BloodSamplingController extends AbstractController
             'form' => $form
         ]));
     }
-    #[Route('/blood-sampling', name: 'bloodSamplingPost',methods: ['POST'])]
-    public function createBloodSampling(Request $request,BloodSamplingRepository $bloodSamplingRepository): Response
+
+    #[Route('/blood-sampling', name: 'bloodSamplingPost', methods: ['POST'])]
+    public function createBloodSampling(Request $request, BloodSamplingRepository $bloodSamplingRepository): Response
     {
         $form = $this->createForm(BloodSamplingType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $bloodSampling = $form->getData();
             $bloodSamplingRepository->getEm()->persist($bloodSampling);
             $bloodSamplingRepository->getEm()->flush();
@@ -38,10 +36,10 @@ class BloodSamplingController extends AbstractController
         }
         return new Response($this->render('blood_sampling/blood_sampling.twig', [
             'form' => $form
-        ]),Response::HTTP_BAD_REQUEST);
+        ]), Response::HTTP_BAD_REQUEST);
     }
 
-    #[Route('/send-blood-sampling',name:'sendBloodSamplingGet',methods:['GET'])]
+    #[Route('/send-blood-sampling', name: 'sendBloodSamplingGet', methods: ['GET'])]
     public function sendBloodSamplingPage(): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
@@ -49,23 +47,24 @@ class BloodSamplingController extends AbstractController
             'form' => $form
         ]));
     }
-    #[Route('/send-blood-sampling',name:'sendBloodSamplingPost',methods:['POST'])]
-    public function sendEmailBloodSampling(Request $request,MailerInterface $mailer,BloodSamplingRepository $bloodSamplingRepository,AdaptiMessage $message,\IntlDateFormatter $dateFormatter): Response
+
+    #[Route('/send-blood-sampling', name: 'sendBloodSamplingPost', methods: ['POST'])]
+    public function sendEmailBloodSampling(Request $request, MailerInterface $mailer, BloodSamplingRepository $bloodSamplingRepository, AdaptiMessage $message, \IntlDateFormatter $dateFormatter): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            switch ($form->getData()["_select_receiver"]){
+        if ($form->isSubmitted() && $form->isValid()) {
+            switch ($form->getData()["_select_receiver"]) {
 
                 case 'constance.beyler@aphp.fr':
-                    $message->toBeyler("constance.beyler@aphp.fr",$bloodSamplingRepository,$mailer,$dateFormatter);
+                    $message->toBeyler("constance.beyler@aphp.fr", $bloodSamplingRepository, $mailer);
                     break;
                 case 'ronan.bonnefoy@aphp.fr':
-                    $message->toBonnefoy('ronan.bonnefoy@aphp.fr',$bloodSamplingRepository,$mailer,$dateFormatter);
+                    $message->toOtherDoctors('ronan.bonnefoy@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
+                    break;
                 case 'mathilde.egraz@aphp.fr':
-                    $message->toEgraz('mathilde.egraz@aphp.fr',$bloodSamplingRepository,$mailer,$dateFormatter);
+                    $message->toOtherDoctors('mathilde.egraz@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
             }
             return $this->redirectToRoute('homepage');
         }
