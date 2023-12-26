@@ -48,7 +48,7 @@ header nav {
 #bloodSampling form {
     display: flex;
     flex-direction: column;
-    gap: 3em;
+    gap: 5em;
 }
 
 #bloodSampling form input{
