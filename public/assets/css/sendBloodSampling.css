@@ -1,0 +1,79 @@
+header{
+    margin-bottom: 3em;
+    padding-top: 2em;
+}
+header nav {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1em;
+}
+
+#logout{
+    position: relative;
+    top: 16px;
+}
+.banner img{
+    width: 100%;
+}
+
+.banner {
+    margin-bottom: 5em;
+}
+
+#bloodSampling h1{
+    margin-bottom: 1em;
+    text-align: center;
+    position: relative;
+    font-size: 3em;
+}
+
+#bloodSampling h1::after
+{
+    content: '';
+    display: block;
+    width: 4.5em;
+    border-bottom: 1px solid red;
+    border-width: .1em;
+    margin: 0 auto;
+    position: relative;
+}
+#bloodSampling{
+    padding: 0;
+}
+
+#bloodSampling .row {
+    margin-inline: 0;
+}
+
+#bloodSampling form {
+    display: flex;
+    flex-direction: column;
+    gap: 5em;
+}
+
+#bloodSampling form input{
+    padding: .4em;
+}
+#bloodSampling form div {
+    position: relative;
+}
+#bloodSampling ul {
+    padding:0;
+    position: absolute;
+    top: 4.8em;
+}
+
+#bloodSampling ul li {
+    color:indianred;
+}
+input,label,#blood_sampling_save {
+    width: 100%;
+}
+
+#blood_sampling_isSend{
+    position: relative;
+    bottom: 20px;
+}
+#send_blood_sampling__select_receiver,#send_blood_sampling_save{
+    width: 100%;
+}
