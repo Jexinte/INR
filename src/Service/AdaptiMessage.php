@@ -12,7 +12,7 @@ class AdaptiMessage
     {
         $email = (new Email())
             ->from('mdembelepro@gmail.com')
-            ->to("mdembeleloisirs@gmail.com")
+            ->to("constance.beyler@aphp.fr")
             ->to($receiver)
             ->subject('INR')
             ->text(body: "Bonjour Dr Beyler,\n" . " 
@@ -26,7 +26,7 @@ Mamadou D.D
 
     public function toOtherDoctors(string $receiver, BloodSamplingRepository $samplingRepository, MailerInterface $mailer, \IntlDateFormatter $dateFormatter): void
     {
-        $politeHello = $receiver === "mathilde.egraz@aphp.fr" ? "Bonjour Dr Egraz" : "Bonjour Dr BonneFoy";
+        $politeHello = str_contains($receiver,'mathilde') ? "Bonjour Dr Egraz" : "Bonjour Dr BonneFoy";
         $email = (new Email())
             ->from('mdembelepro@gmail.com')
             ->to($receiver)
