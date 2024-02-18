@@ -77,3 +77,7 @@ input,label,#blood_sampling_save {
 #send_blood_sampling__select_receiver,#send_blood_sampling_save{
     width: 100%;
 }
+
+#update_blood_sampling_save{
+    width: 100%;
+}

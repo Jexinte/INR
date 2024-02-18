@@ -17,8 +17,8 @@ class HomepageController extends AbstractController
             $bloodSamplingRepository->findAll()[$k]->frenchDate = ucfirst($dateFormatter->format($bloodSampling->getCreatedAt()));
             $bloodSamplingRepository->findAll()[$k]->nextDateInr = ucfirst($dateFormatter->format($bloodSampling->getDateOfNextInr()));
         }
-       return new Response($this->render('homepage/homepage.twig',[
+       return $this->render('homepage/homepage.twig',[
            'bloodSamplingResults' => $bloodSamplingRepository->findAll(),
-       ]));
+       ]);
     }
 }

@@ -12,6 +12,9 @@ header nav {
     position: relative;
     top: 16px;
 }
+#updateBloodSampling,#updateBloodSampling:visited{
+color: black;
+}
 
 .banner img {
     width: 100%;

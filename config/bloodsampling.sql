@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 25 déc. 2023 à 10:52
+-- Généré le :  Sun 18 fév. 2024 à 09:11
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  8.2.12
 
@@ -96,7 +96,14 @@ INSERT INTO `blood_sampling` (`id`, `created_at`, `daily_dose_before_blood_test`
 (51, '2023-09-17 00:00:00', 1.5, 4.5, '1.4', 'RAS', '2023-09-22 00:00:00', 1),
 (52, '2023-09-22 00:00:00', 1.4, 4.2, '1.2', 'RAS', '2023-09-28 00:00:00', 1),
 (53, '2023-09-28 00:00:00', 1.2, 3.4, 'Pas de modification de la dose', 'RAS', '2023-10-08 00:00:00', 1),
-(54, '2023-10-08 00:00:00', 1.2, 3.1, 'Pas de modification de la dose', 'RAS', '2023-10-20 00:00:00', 1);
+(54, '2023-10-08 00:00:00', 1.2, 3.1, 'Pas de modification de la dose', 'RAS', '2023-11-03 00:00:00', 1),
+(55, '2023-11-03 12:46:00', 1.1, 3.7, 'Pas de modification de la dose', 'RAS', '2023-11-22 10:15:00', 1),
+(56, '2023-11-22 10:15:00', 1.1, 3.2, 'Pas de modification de la dose', 'RAS', '2023-12-10 10:45:00', 1),
+(57, '2023-12-10 10:46:00', 1.1, 2.5, 'Pas de modification de la dose', 'RAS', '2023-12-15 07:39:00', 1),
+(58, '2023-12-15 07:39:00', 1.1, 2.9, 'Pas de modification de la dose', 'RAS', '2024-01-05 12:43:00', 1),
+(59, '2024-01-05 09:45:00', 1.1, 3.5, 'Pas de modification de la dose', 'RAS', '2024-01-19 09:46:00', 1),
+(60, '2024-01-31 10:25:00', 1.1, 4, 'Pas de modification de la dose', 'RAS', '2024-02-03 10:26:00', 1),
+(61, '2024-02-03 09:47:00', 1.1, 4.2, 'Pas de modification de la dose', 'RAS', '2024-02-14 09:48:00', 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +150,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `blood_sampling`
 --
 ALTER TABLE `blood_sampling`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `user`

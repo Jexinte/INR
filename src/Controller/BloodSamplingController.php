@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\BloodSampling;
 use App\Form\BloodSamplingType;
 use App\Form\SendBloodSamplingType;
+use App\Form\UpdateBloodSamplingType;
 use App\Repository\BloodSamplingRepository;
 use App\Service\AdaptiMessage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,12 +67,41 @@ class BloodSamplingController extends AbstractController
                     break;
                 case 'mathilde.egraz@aphp.fr':
                     $message->toOtherDoctors('mathilde.egraz@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
+                    break;
+                case 'alisson.bertrand@aphp.fr':
+                    $message->toOtherDoctors('alisson.bertrand@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
+                    break;
             }
             return $this->redirectToRoute('homepage');
         }
         return new Response($this->render('send_blood_sampling/send_blood_sampling.twig', [
             'form' => $form
         ]));
+    }
+
+    #[Route('/update-blood-sampling/{id}', name: 'updateBloodSamplingGet', methods: ['GET'])]
+    public function updateBloodSamplingPage(BloodSampling $sampling): Response
+    {
+        $form = $this->createForm(UpdateBloodSamplingType::class, $sampling);
+        return $this->render('update_blood_sampling/update_blood_sampling.twig', [
+            'form' => $form,
+            'bloodSampling' => $sampling
+        ]);
+    }
+
+    #[Route('/update-blood-sampling/{id}', name: 'updateBloodSamplingPost', methods: ['POST'])]
+    public function updateBloodSamplingPost(BloodSamplingRepository $samplingRepository, BloodSampling $sampling, Request $request): Response
+    {
+        $form = $this->createForm(UpdateBloodSamplingType::class, $sampling);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $samplingRepository->getEm()->flush();
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('update_blood_sampling/update_blood_sampling.twig', [
+            'form' => $form,
+            'bloodSampling', $sampling
+        ]);
     }
 
 }

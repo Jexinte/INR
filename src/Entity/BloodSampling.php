@@ -22,7 +22,7 @@ class BloodSampling
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Veuillez spécifier la dose journalière avant que la prise de sang n\'est été effectuée !')]
-    private ?float $dailyDoseBeforeBloodTest = null;
+    private ?string $dailyDoseBeforeBloodTest = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Veuillez spécifier l\'inr !')]
@@ -60,12 +60,12 @@ class BloodSampling
         return $this;
     }
 
-    public function getDailyDoseBeforeBloodTest(): ?float
+    public function getDailyDoseBeforeBloodTest(): ?string
     {
         return $this->dailyDoseBeforeBloodTest;
     }
 
-    public function setDailyDoseBeforeBloodTest(float $dailyDoseBeforeBloodTest): static
+    public function setDailyDoseBeforeBloodTest(?string $dailyDoseBeforeBloodTest): static
     {
         $this->dailyDoseBeforeBloodTest = $dailyDoseBeforeBloodTest;
 

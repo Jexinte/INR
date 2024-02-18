@@ -26,12 +26,13 @@ Mamadou D.D
 
     public function toOtherDoctors(string $receiver, BloodSamplingRepository $samplingRepository, MailerInterface $mailer, \IntlDateFormatter $dateFormatter): void
     {
-        $politeHello = str_contains($receiver,'mathilde') ? "Bonjour Dr Egraz" : "Bonjour Dr BonneFoy";
+        $nameOfTheDoctor = $this->receiver($receiver);
+
         $email = (new Email())
             ->from('mdembelepro@gmail.com')
             ->to($receiver)
             ->subject('INR')
-            ->text(body: "$politeHello, \n
+            ->text(body: "Bonjour $nameOfTheDoctor, \n
 Le Dr Beyler m'ayant redirigé vers vous pour avoir un retour sur le dernier INR, je vous mets ci-contre les 3 derniers résultats  : \n\n" .
                 ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getInr() . " - " . "Coumadine " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getDailyDoseBeforeBloodTest() . "\n\n" .
                 ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getInr() . " - " . "Coumadine " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getDailyDoseBeforeBloodTest() . "\n\n" .
@@ -43,7 +44,15 @@ Mamadou D.D
         $mailer->send($email);
     }
 
-
+public function receiver($name):?string
+{
+    return match ($name) {
+        'ronan.bonnefoy@aphp.fr' => "Bonjour Dr Bonnefoy",
+        'mathilde.egraz@aphp.fr' => "Bonjour Dr Egraz",
+        'alisson.bertrand@aphp.fr' => "Bonjour Dr Bertrand",
+        default => null,
+    };
+}
     
     public function getTheLastThreeBloodSamples(BloodSamplingRepository $samplingRepository) :array
     {
@@ -53,6 +62,5 @@ Mamadou D.D
             "lastSample" => $samplingRepository->findAll()[count($samplingRepository->findAll()) - 1]
         ];
     }
-
 
 }
