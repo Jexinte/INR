@@ -8,12 +8,16 @@
     box-sizing: border-box;
 }
 
+header {
+    margin-top:2em;
+}
 header a{
     text-decoration: none;
 }
 
 header a {
     color: black;
+    margin-right: 20px;
 }
 
 header a:visited{
