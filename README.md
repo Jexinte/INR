@@ -1,2 +1,3 @@
 # Description
-It's a simple project for my own needs to send blood result to doctors.
+It's a simple project to send blood sampling result to doctors.
+
