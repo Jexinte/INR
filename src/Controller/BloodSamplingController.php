@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BloodSamplingController extends AbstractController
 {
-    #[Route('/blood-sampling', name: 'bloodSamplingGet', methods: ['GET'])]
+    #[Route('/creer-prelevement-de-sang', name: 'blood_sampling_get', methods: ['GET'])]
     public function bloodSamplingPage(): Response
     {
         $form = $this->createForm(BloodSamplingType::class);
@@ -25,7 +25,7 @@ class BloodSamplingController extends AbstractController
         ]));
     }
 
-    #[Route('/blood-sampling', name: 'bloodSamplingPost', methods: ['POST'])]
+    #[Route('/creer-prelevement-de-sang', name: 'blood_sampling_post', methods: ['POST'])]
     public function createBloodSampling(Request $request, BloodSamplingRepository $bloodSamplingRepository): Response
     {
         $form = $this->createForm(BloodSamplingType::class);
@@ -42,7 +42,7 @@ class BloodSamplingController extends AbstractController
         ], $response->setStatusCode(Response::HTTP_BAD_REQUEST));
     }
 
-    #[Route('/send-blood-sampling', name: 'sendBloodSamplingGet', methods: ['GET'])]
+    #[Route('/envoi-prelevement-de-sang', name: 'send_blood_sampling_get', methods: ['GET'])]
     public function sendBloodSamplingPage(): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
@@ -51,7 +51,7 @@ class BloodSamplingController extends AbstractController
         ]));
     }
 
-    #[Route('/send-blood-sampling', name: 'sendBloodSamplingPost', methods: ['POST'])]
+    #[Route('/envoi-prelevement-de-sang', name: 'send_blood_sampling_post', methods: ['POST'])]
     public function sendEmailBloodSampling(Request $request, MailerInterface $mailer, BloodSamplingRepository $bloodSamplingRepository, AdaptiMessage $adaptiMessage, \IntlDateFormatter $dateFormatter): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
@@ -69,7 +69,7 @@ class BloodSamplingController extends AbstractController
         ]);
     }
 
-    #[Route('/update-blood-sampling/{id}', name: 'updateBloodSamplingGet', methods: ['GET'])]
+    #[Route('/mise-a-jour-prelevement-de-sang/{id}', name: 'update_blood_sampling_get', methods: ['GET'])]
     public function updateBloodSamplingPage(BloodSampling $sampling): Response
     {
         $form = $this->createForm(UpdateBloodSamplingType::class, $sampling);
@@ -79,7 +79,7 @@ class BloodSamplingController extends AbstractController
         ]);
     }
 
-    #[Route('/update-blood-sampling/{id}', name: 'updateBloodSamplingPost', methods: ['POST'])]
+    #[Route('/mise-a-jour-prelevement-de-sang/{id}', name: 'update_blood_sampling_post', methods: ['POST'])]
     public function updateBloodSamplingPost(BloodSamplingRepository $samplingRepository, BloodSampling $sampling, Request $request): Response
     {
         $form = $this->createForm(UpdateBloodSamplingType::class, $sampling);

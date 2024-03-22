@@ -15,8 +15,8 @@
         <nav>
             <a href="/"><img src="/assets/img/logo.jpg" alt="logo" height="60"></a>
             <div class="right">
-                <a href="{{ path('bloodSamplingGet') }}" id="bloodSampling"><i class="fa-solid fa-plus"></i></a>
-                <a href="{{ path('sendBloodSamplingGet') }}" id="sendBloodSampling"><i class="fa-solid fa-envelope"></i></a>
+                <a href="{{ path('blood_sampling_get') }}" id="bloodSampling"><i class="fa-solid fa-plus"></i></a>
+                <a href="{{ path('send_blood_sampling_get') }}" id="sendBloodSampling"><i class="fa-solid fa-envelope"></i></a>
                 <a href="/logout" id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
             </div>
 
@@ -58,7 +58,7 @@
                             <td>{{ bloodSamplingResult.dailyDoseModifiedAfterInr }}</td>
                             <td>{{ bloodSamplingResult.anyComments }}</td>
                             <td>{{ bloodSamplingResult.nextDateInr }}</td>
-                            <td><a href="{{ path('updateBloodSamplingGet',{'id':bloodSamplingResult.id}) }}" id="updateBloodSampling"><i class="fa-solid fa-pen"></i></a></td>
+                            <td><a href="{{ path('update_blood_sampling_get',{'id':bloodSamplingResult.id}) }}" id="updateBloodSampling"><i class="fa-solid fa-pen"></i></a></td>
 
                         </tr>
 
