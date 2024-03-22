@@ -14,16 +14,16 @@ class LoginController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $form = $this->createForm(LoginType::class);
-
+        $response = new Response();
         if($authenticationUtils->getLastAuthenticationError())
         {
             $error = new FormError('Identifiant ou mot de passe incorrect !');
             $usernameField = $form->get('username');
             $usernameField->addError($error);
 
-            return new Response($this->render('login/login.twig',["form" => $form]),Response::HTTP_BAD_REQUEST);
+            return $this->render('login/login.twig',["form" => $form],$response->setStatusCode(Response::HTTP_BAD_REQUEST));
         }
-        return new Response($this->render('login/login.twig',["form" => $form]));
+        return $this->render('login/login.twig',["form" => $form]);
 
     }
 

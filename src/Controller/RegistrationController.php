@@ -18,7 +18,7 @@ class RegistrationController extends AbstractController
     public function registrationPage(): Response
     {
         $form = $this->createForm(RegistrationType::class);
-        return new Response($this->render('registration/registration.twig',["form" => $form]));
+        return $this->render('registration/registration.twig',["form" => $form]);
 
     }
     #[Route('/registration', name: 'registration_post',methods: ['POST'])]
@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationType::class,$user);
         $form->handleRequest($request);
-
+        $response = new  Response();
         if($form->isSubmitted() && $form->isValid())
         {
             $hashPassword = $passwordHasher->hashPassword($user,$user->getPassword());
@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
             $userRepository->upgradePassword($user,$hashPassword);
             return $this->redirectToRoute('login_get');
         }
-        return new Response($this->render('registration/registration.twig',["form" => $form]),Response::HTTP_BAD_REQUEST);
+        return $this->render('registration/registration.twig',["form" => $form],$response->setStatusCode(Response::HTTP_BAD_REQUEST));
 
     }
 }

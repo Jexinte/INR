@@ -20,7 +20,7 @@ class BloodSamplingController extends AbstractController
     public function bloodSamplingPage(): Response
     {
         $form = $this->createForm(BloodSamplingType::class);
-        return new Response($this->render('blood_sampling/blood_sampling.twig', [
+        return ($this->render('blood_sampling/blood_sampling.twig', [
             'form' => $form
         ]));
     }
@@ -30,53 +30,42 @@ class BloodSamplingController extends AbstractController
     {
         $form = $this->createForm(BloodSamplingType::class);
         $form->handleRequest($request);
+        $response = new Response();
         if ($form->isSubmitted() && $form->isValid()) {
             $bloodSampling = $form->getData();
             $bloodSamplingRepository->getEm()->persist($bloodSampling);
             $bloodSamplingRepository->getEm()->flush();
             return $this->redirectToRoute('homepage');
         }
-        return new Response($this->render('blood_sampling/blood_sampling.twig', [
+        return $this->render('blood_sampling/blood_sampling.twig', [
             'form' => $form
-        ]), Response::HTTP_BAD_REQUEST);
+        ], $response->setStatusCode(Response::HTTP_BAD_REQUEST));
     }
 
     #[Route('/send-blood-sampling', name: 'sendBloodSamplingGet', methods: ['GET'])]
     public function sendBloodSamplingPage(): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
-        return new Response($this->render('send_blood_sampling/send_blood_sampling.twig', [
+        return ($this->render('send_blood_sampling/send_blood_sampling.twig', [
             'form' => $form
         ]));
     }
 
     #[Route('/send-blood-sampling', name: 'sendBloodSamplingPost', methods: ['POST'])]
-    public function sendEmailBloodSampling(Request $request, MailerInterface $mailer, BloodSamplingRepository $bloodSamplingRepository, AdaptiMessage $message, \IntlDateFormatter $dateFormatter): Response
+    public function sendEmailBloodSampling(Request $request, MailerInterface $mailer, BloodSamplingRepository $bloodSamplingRepository, AdaptiMessage $adaptiMessage, \IntlDateFormatter $dateFormatter): Response
     {
         $form = $this->createForm(SendBloodSamplingType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            switch ($form->getData()["_select_receiver"]) {
-
-                case 'constance.beyler@aphp.fr':
-                    $message->toBeyler("constance.beyler@aphp.fr", $bloodSamplingRepository, $mailer);
-                    break;
-                case 'ronan.bonnefoy@aphp.fr':
-                    $message->toOtherDoctors('ronan.bonnefoy@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
-                    break;
-                case 'mathilde.egraz@aphp.fr':
-                    $message->toOtherDoctors('mathilde.egraz@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
-                    break;
-                case 'alisson.bertrand@aphp.fr':
-                    $message->toOtherDoctors('alisson.bertrand@aphp.fr', $bloodSamplingRepository, $mailer, $dateFormatter);
-                    break;
-            }
+            $receiver = $adaptiMessage->checkReceiver($form->getData()["_select_receiver"]);
+            $adaptiMessage->toDoctors($receiver, $bloodSamplingRepository, $mailer, $dateFormatter);
             return $this->redirectToRoute('homepage');
-        }
-        return new Response($this->render('send_blood_sampling/send_blood_sampling.twig', [
+            }
+
+        return $this->render('send_blood_sampling/send_blood_sampling.twig', [
             'form' => $form
-        ]));
+        ]);
     }
 
     #[Route('/update-blood-sampling/{id}', name: 'updateBloodSamplingGet', methods: ['GET'])]

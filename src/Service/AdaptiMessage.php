@@ -8,50 +8,31 @@ use Symfony\Component\Mime\Email;
 
 class AdaptiMessage
 {
-    public function toBeyler(string $receiver, BloodSamplingRepository $samplingRepository, MailerInterface $mailer): void
+
+    public function toDoctors(string $receiver, BloodSamplingRepository $samplingRepository, MailerInterface $mailer, \IntlDateFormatter $dateFormatter): void
     {
+        $sender = json_decode(file_get_contents('../config/sender.json'),true);
         $email = (new Email())
-            ->from('mdembelepro@gmail.com')
-            ->to("constance.beyler@aphp.fr")
+            ->from($sender["email"])
             ->to($receiver)
             ->subject('INR')
-            ->text(body: "Bonjour Dr Beyler,\n" . " 
-Le résultat est à " . $samplingRepository->findAll()[count($samplingRepository->findAll()) - 1]->getInr() . ". \n\n" .
-                "Pour rappel la dose de coumadine est à " . $samplingRepository->findAll()[count($samplingRepository->findAll()) - 1]->getDailyDoseBeforeBloodTest() . "mg \n
-Cordialement , \n
-Mamadou D.D
-               ");
-        $mailer->send($email);
-    }
-
-    public function toOtherDoctors(string $receiver, BloodSamplingRepository $samplingRepository, MailerInterface $mailer, \IntlDateFormatter $dateFormatter): void
-    {
-        $nameOfTheDoctor = $this->receiver($receiver);
-
-        $email = (new Email())
-            ->from('mdembelepro@gmail.com')
-            ->to($receiver)
-            ->subject('INR')
-            ->text(body: "Bonjour $nameOfTheDoctor, \n
-Le Dr Beyler m'ayant redirigé vers vous pour avoir un retour sur le dernier INR, je vous mets ci-contre les 3 derniers résultats  : \n\n" .
-                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getInr() . " - " . "Coumadine " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getDailyDoseBeforeBloodTest() . "\n\n" .
-                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getInr() . " - " . "Coumadine " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getDailyDoseBeforeBloodTest() . "\n\n" .
-                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getInr() . " - " . "Coumadine " . $this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getDailyDoseBeforeBloodTest() . "\n\n" .
-                " Cordialement  \n 
+            ->text(body: "{$this->welcomeMessage($receiver)}, \n
+Voici le résultat de l'INR ci-contre avec les 2 derniers résultats  : \n\n" .
+                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getInr() . " - " . "Coumadine - " . $this->getTheLastThreeBloodSamples($samplingRepository)["lastSample"]->getDailyDoseBeforeBloodTest() . "\n\n" .
+                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getInr() . " - " . "Coumadine - " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getDailyDoseBeforeBloodTest() . "\n\n" .
+                ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getInr() . " - " . "Coumadine - " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getDailyDoseBeforeBloodTest() . "\n\n" .
+                "Cordialement  \n 
 Mamadou D.D
 ");
 
         $mailer->send($email);
     }
 
-public function receiver($name):?string
+public function welcomeMessage($name):?string
+
 {
-    return match ($name) {
-        'ronan.bonnefoy@aphp.fr' => "Bonjour Dr Bonnefoy",
-        'mathilde.egraz@aphp.fr' => "Bonjour Dr Egraz",
-        'alisson.bertrand@aphp.fr' => "Bonjour Dr Bertrand",
-        default => null,
-    };
+    $doctorsName = array_flip(json_decode(file_get_contents('../config/doctors.json'),true));
+    return "Bonjour ".$doctorsName[$name];
 }
     
     public function getTheLastThreeBloodSamples(BloodSamplingRepository $samplingRepository) :array
@@ -61,6 +42,12 @@ public function receiver($name):?string
             "beforeLast" => $samplingRepository->findAll()[count($samplingRepository->findAll()) - 2],
             "lastSample" => $samplingRepository->findAll()[count($samplingRepository->findAll()) - 1]
         ];
+    }
+
+    public function checkReceiver(string $receiver):?string
+    {
+        $doctorsEmails = json_decode(file_get_contents('../config/doctors.json'),true);
+        return in_array($receiver,$doctorsEmails) ? $receiver:null;
     }
 
 }

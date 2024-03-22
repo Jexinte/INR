@@ -14,13 +14,17 @@ class SendBloodSamplingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $doctorsEmails = json_decode(file_get_contents('../config/doctors.json'),true);
+        $doctorsName = array_flip(json_decode(file_get_contents('../config/doctors.json'),true));
         $builder
             ->add('_select_receiver',ChoiceType::class,[
                 'label' => 'Sélectionner un destinataire' ,
                 'choices' => [
-                    'Dr Beyler' => 'constance.beyler@aphp.fr',
-                    'Dr Egraz' => 'mathilde.egraz@aphp.fr',
-                    'Dr Bonnefoy' => 'ronan.bonnefoy@aphp.fr',
+                    current($doctorsName) => current($doctorsEmails),
+                    next($doctorsName) => next($doctorsEmails),
+                    next($doctorsName) => next($doctorsEmails),
+                    next($doctorsName) => next($doctorsEmails),
+                    next($doctorsName) => next($doctorsEmails),
                 ],
                 'constraints' => [
                     new NotBlank(message:'Merci de séléctionner un destinaire !')
