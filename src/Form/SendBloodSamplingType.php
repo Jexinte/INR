@@ -24,7 +24,6 @@ class SendBloodSamplingType extends AbstractType
                     next($doctorsName) => next($doctorsEmails),
                     next($doctorsName) => next($doctorsEmails),
                     next($doctorsName) => next($doctorsEmails),
-                    next($doctorsName) => next($doctorsEmails),
                 ],
                 'constraints' => [
                     new NotBlank(message:'Merci de séléctionner un destinaire !')

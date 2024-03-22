@@ -60,6 +60,7 @@ class BloodSamplingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $receiver = $adaptiMessage->checkReceiver($form->getData()["_select_receiver"]);
             $adaptiMessage->toDoctors($receiver, $bloodSamplingRepository, $mailer, $dateFormatter);
+            $this->addFlash("success","L'envoi du mail a été effectué avec succès !");
             return $this->redirectToRoute('homepage');
             }
 

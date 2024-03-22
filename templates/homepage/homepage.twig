@@ -24,10 +24,16 @@
     </header>
     <div class="container-fluid" id="homepage">
         <div class="banner">
-            <img src="/assets/img/homepage_banner.webp" alt="banner homepage">
+            <img src="/assets/img/homepage-banner.webp" alt="banner homepage">
         </div>
 
         <div class="row">
+            {% for message in app.flashes('success') %}
+                <div class="flash-success bg-success text-white p-5 mb-5 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             <h1>Résultats INR</h1>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <table class="table">
