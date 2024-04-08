@@ -22,7 +22,7 @@ Voici le résultat de l'INR ci-contre avec les 2 derniers résultats  : \n\n" .
                 ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getInr() . " - " . "Coumadine - " . $this->getTheLastThreeBloodSamples($samplingRepository)['beforeLast']->getDailyDoseBeforeBloodTest() . "\n\n" .
                 ucfirst($dateFormatter->format($this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getCreatedAt())) . " - INR " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getInr() . " - " . "Coumadine - " . $this->getTheLastThreeBloodSamples($samplingRepository)["beforeBeforeLast"]->getDailyDoseBeforeBloodTest() . "\n\n" .
                 "Cordialement  \n 
-Mamadou D.D
+{$sender["name"]}
 ");
 
         $mailer->send($email);
